@@ -1,0 +1,40 @@
+@startuml object
+object CarParkSystem {
+    name = "Car Park Management System"
+}
+
+object UserInterface {
+    mode = "Admin/User"
+}
+
+object Validator {
+    currentVRN = "AB12 CDE"
+}
+
+object CSVHandler {
+    fileName = "carpark_data.csv"
+    numberOfRecords = 150
+}
+
+object VehicleRecord {
+    carVRN = "AB12 CDE"
+    entryTimestamp = "10:00:00 01-12-2024"
+    exitTimestamp = "15:30:00 01-12-2024"
+    isCurrentlyParked = false
+}
+
+object AdminMode {
+    authenticated = true
+}
+
+object UserMode {
+    currentUserVRN = "AB12 CDE"
+}
+
+UserInterface -- CarParkSystem
+Validator -- UserInterface
+UserMode -- UserInterface
+AdminMode -- UserInterface
+CSVHandler -- VehicleRecord
+VehicleRecord -- Validator
+@enduml

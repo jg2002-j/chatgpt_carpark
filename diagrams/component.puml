@@ -1,0 +1,19 @@
+@startuml component
+package "Car Park Management System" {
+    [User Interface] as UI
+    [Admin Module] as Admin
+    [User Module] as User
+    [Validator] as Validator
+    [CSV Handler] as CSV
+    [Vehicle Record] as Vehicle
+}
+
+UI --> User
+UI --> Admin
+UI --> Validator
+Admin --> CSV
+User --> CSV
+Validator --> Vehicle
+CSV --> Vehicle
+
+@enduml

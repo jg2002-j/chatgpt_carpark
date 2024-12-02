@@ -1,0 +1,53 @@
+@startuml class
+class CarParkSystem {
+    +main(String[] args)
+}
+
+class CSVHandler {
+    +readRecords(): List<VehicleRecord>
+    +writeRecords(List<VehicleRecord>)
+    +addRecord(VehicleRecord)
+    +updateRecord(VehicleRecord)
+    +deleteRecord(VehicleRecord)
+}
+
+class VehicleRecord {
+    +carVRN: String
+    +entryTimestamp: LocalDateTime
+    +exitTimestamp: LocalDateTime
+    +isCurrentlyParked(): Boolean
+    +calculateDuration(): String
+    +calculateCost(ratePerHour: double): double
+}
+
+class Validator {
+    +validateVRN(String): boolean
+    +standardizeVRN(String): String
+}
+
+class UserInterface {
+    +launch()
+}
+
+class UserMode {
+    +handleUserEntry()
+    +handleUserExit()
+}
+
+class AdminMode {
+    +authenticate(username: String, password: String): boolean
+    +viewParkedVehicles()
+    +searchVehicleRecords(String)
+    +amendVehicleRecord()
+    +removeIncorrectRecord()
+}
+
+CarParkSystem --> UserInterface
+UserInterface --> UserMode
+UserInterface --> AdminMode
+AdminMode --> CSVHandler
+UserMode --> CSVHandler
+CSVHandler --> VehicleRecord
+Validator --> UserMode
+Validator --> AdminMode
+@enduml

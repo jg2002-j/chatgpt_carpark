@@ -1,0 +1,20 @@
+@startuml usecase
+actor User
+actor Admin
+
+usecase "Enter Car Park" as UC1
+usecase "Exit Car Park" as UC2
+usecase "View Currently Parked Vehicles" as UC3
+usecase "Search Vehicle Records" as UC4
+usecase "Amend Vehicle Records" as UC5
+usecase "Remove Incorrect Records" as UC6
+
+User --> UC1
+User --> UC2
+
+Admin --> UC3
+Admin --> UC4
+Admin --> UC5
+Admin --> UC6
+
+@enduml

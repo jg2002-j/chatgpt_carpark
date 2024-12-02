@@ -1,0 +1,70 @@
+@startuml sequence
+actor User
+actor Admin
+participant "UserInterface" as UI
+participant "CSVHandler" as CSV
+participant "Validator"
+participant "VehicleRecord" as VR
+
+== User Mode ==
+User -> UI: Launch App
+UI -> User: Display User Mode
+User -> UI: Enter VRN
+UI -> Validator: Validate VRN
+Validator --> UI: Return Valid/Invalid
+
+alt VRN Valid
+    UI -> CSV: Check if Vehicle in Car Park
+    CSV --> UI: Return Record
+    alt Vehicle Not in Car Park
+        UI -> CSV: Log Entry Time
+        CSV --> UI: Confirm Entry Logged
+    else Vehicle in Car Park
+        UI -> CSV: Log Exit Time
+        CSV --> UI: Confirm Exit Logged
+    end
+else VRN Invalid
+    UI -> User: Display Error
+end
+
+== Admin Mode ==
+Admin -> UI: Launch App
+UI -> Admin: Display Admin Mode
+Admin -> UI: Authenticate
+UI -> Validator: Validate Credentials
+Validator --> UI: Return Valid/Invalid
+
+alt Credentials Valid
+    Admin -> UI: Select Option
+    alt View Parked Vehicles
+        UI -> CSV: Fetch Parked Vehicles
+        CSV --> UI: Return Parked Vehicle List
+    else Search Vehicle Records
+        Admin -> UI: Enter VRN
+        UI -> Validator: Validate VRN
+        Validator --> UI: Return Valid/Invalid
+        UI -> CSV: Fetch Vehicle Records
+        CSV --> UI: Return Records
+    else Amend Records
+        Admin -> UI: Enter VRN
+        UI -> Validator: Validate VRN
+        Validator --> UI: Return Valid/Invalid
+        UI -> CSV: Fetch Vehicle Records
+        CSV --> UI: Return Records
+        Admin -> UI: Select Record and Field
+        UI -> CSV: Update Record
+        CSV --> UI: Confirm Update
+    else Remove Records
+        Admin -> UI: Enter VRN
+        UI -> Validator: Validate VRN
+        Validator --> UI: Return Valid/Invalid
+        UI -> CSV: Fetch Vehicle Records
+        CSV --> UI: Return Records
+        Admin -> UI: Select Record to Delete
+        UI -> CSV: Delete Record
+        CSV --> UI: Confirm Deletion
+    end
+else Credentials Invalid
+    UI -> Admin: Display Authentication Error
+end
+@enduml

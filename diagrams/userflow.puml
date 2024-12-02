@@ -1,0 +1,40 @@
+@startuml userflow
+start
+:Launch Application;
+if (User or Admin?) then (User)
+    :Enter VRN;
+    if (Validate VRN?) then (Valid)
+        if (Vehicle in Car Park?) then (No)
+            :Log Entry Time;
+            :Display "Vehicle Entered";
+        else (Yes)
+            :Log Exit Time;
+            :Display "Vehicle Exited";
+        endif
+    else (Invalid)
+        :Show Validation Error;
+    endif
+else (Admin)
+    :Enter Username & Password;
+    if (Authentication Successful?) then (Yes)
+        :Choose Option;
+        switch (Admin Option)
+        case (View Parked Vehicles)
+            :Display All Parked Vehicles;
+        case (Search Vehicle Records)
+            :Search by VRN;
+            :Display Matching Records;
+        case (Amend Records)
+            :Select Record to Amend;
+            :Edit Selected Field;
+            :Update Record;
+        case (Remove Records)
+            :Select Record to Delete;
+            :Delete Record;
+        endswitch
+    else (No)
+        :Show Authentication Error;
+    endif
+endif
+stop
+@enduml

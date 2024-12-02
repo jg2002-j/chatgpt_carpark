@@ -1,0 +1,15 @@
+@startuml deployment
+node "User Device" {
+    component "GUI Application"
+}
+
+node "Server" {
+    component "CSV Handler"
+    component "Validator"
+    component "Vehicle Records"
+}
+
+"GUI Application" --> "CSV Handler"
+"GUI Application" --> "Validator"
+"CSV Handler" --> "Vehicle Records"
+@enduml

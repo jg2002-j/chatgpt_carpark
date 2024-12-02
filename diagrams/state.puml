@@ -1,0 +1,26 @@
+@startuml state
+[*] --> Idle
+Idle --> WaitingForModeSelection: Select Mode
+WaitingForModeSelection --> UserMode: User Mode Selected
+WaitingForModeSelection --> AdminMode: Admin Mode Selected
+
+UserMode --> ValidatingVRN: Enter VRN
+ValidatingVRN --> VehicleEntry: VRN Valid, Vehicle Not in Car Park
+ValidatingVRN --> VehicleExit: VRN Valid, Vehicle In Car Park
+ValidatingVRN --> Error: VRN Invalid
+Error --> ValidatingVRN: Retry
+
+VehicleEntry --> Confirmation: Record Entry Time
+VehicleExit --> Confirmation: Record Exit Time
+Confirmation --> Idle: Return to Main Menu
+
+AdminMode --> Authenticating: Enter Credentials
+Authenticating --> AdminOptions: Valid Credentials
+Authenticating --> Error: Invalid Credentials
+AdminOptions --> ViewRecords: View Parked Vehicles
+AdminOptions --> SearchRecords: Search Vehicle Records
+AdminOptions --> AmendRecords: Amend a Record
+AdminOptions --> DeleteRecords: Delete a Record
+AdminOptions --> Idle: Exit Admin Mode
+
+@enduml
