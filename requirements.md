@@ -75,7 +75,7 @@ In both cases, display a confirmation message in the GUI to the user indicating 
   - Use Case
   - User Flow
 
-# Design
+# Project Design
 
 - Generate one version using Java Swing and no third-party libraries.
 - Generate a completely separate version but this time using JavaFX and any third-party libraries needed. The functionality should be the exact same between the two versions.
